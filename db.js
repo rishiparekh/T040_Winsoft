@@ -10,10 +10,11 @@ exports.dbInit = async() => {
         });
         const count = await Map.countDocuments()
         if(count === 0){
-            console.log("seeded the database with sample map")
+            console.log("Seeded the database with sample map")
             await new Map({
-                map: map
-            }).save()
+                title: "Map 1",
+                map
+            }).save() // One database entry for a default map with title Map 1
         }
     }
     catch(error){
