@@ -1,6 +1,6 @@
 exports.decrypt = (req, res) => {
     try{
-        const { encrypted_message, key } = req.body
+        const { encrypted_message, key, all_camp_names } = req.body
 
         const length_of_message = encrypted_message.length
         const length_of_key = key.length
@@ -27,12 +27,20 @@ exports.decrypt = (req, res) => {
             }
         }
 
+        const enemy_camps = extract_enemy_camps(decrypted_message, all_camp_names)
+
         res.status(200).json({
-            decrypted_message
+            decrypted_message,
+            enemy_camps
         })
     }
     catch(error){
         console.log(error)
         res.status(500).send("Something went wrong")
     }    
+}
+
+const extract_enemy_camps = (decrypted_message, all_camp_names) => {
+    // insert logic here
+    return []
 }
