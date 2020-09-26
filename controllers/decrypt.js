@@ -42,5 +42,13 @@ exports.decrypt = (req, res) => {
 
 const extract_enemy_camps = (decrypted_message, all_camp_names) => {
     // insert logic here
-    return []
+    let enemy_camp = []
+        all_camp_names.forEach((c)=>{
+        let name_camp = new RegExp(c);
+        var res = name_camp.exec(decrypted_message);
+        if (res){
+            enemy_camp.push(c);
+        }
+    });
+    return enemy_camp;
 }
