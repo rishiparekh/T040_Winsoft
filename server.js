@@ -6,6 +6,10 @@ const morgan = require('morgan')
 app.use(express.json());
 app.use(morgan('dev'));
 
+const decryptionRoutes = require('./routes/decrypt');
+
+app.use('/api/decryption', decryptionRoutes);
+
 const whitelist = ['http://localhost:3000'];
 let corsOptionsDelegate = (req, callback) => {
     let corsOptions;
