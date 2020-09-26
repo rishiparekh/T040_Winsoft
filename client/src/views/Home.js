@@ -1,8 +1,6 @@
 import { Button, Container, Grid, makeStyles, TextField, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 import MainNav from '../components/MainNav'
-import { SERVER_URL } from '../config';
-
 
 const encrypted = "Cnwvtus KuaiTaa rlodeeurethn  an Ia_mrhs baer oag ndC_a aeoat dLj lLdio_me  p  hagZLngan _"
 
@@ -93,10 +91,9 @@ function Home() {
       },
       body: postData
     };
-    console.log('fetch',postData)
-    const data = await fetch(`${SERVER_URL}/api/decryption/`,requestOptions)
+    const data = await fetch("/api/decryption/",requestOptions)
     const result = await data.json();
-    console.log('dfdf',result);  
+    console.log(result);
 
   }
   return (
