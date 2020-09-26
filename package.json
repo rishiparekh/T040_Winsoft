@@ -1,0 +1,21 @@
+{
+  "name": "T040_Winsoft",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RishiDesai17/T040_Winsoft.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RishiDesai17/T040_Winsoft/issues"
+  },
+  "homepage": "https://github.com/RishiDesai17/T040_Winsoft#readme"
+}
