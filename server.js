@@ -10,7 +10,7 @@ const decryptionRoutes = require('./routes/decrypt');
 
 app.use('/api/decryption', decryptionRoutes);
 
-const whitelist = ['http://localhost:3000'];
+const whitelist = ['http://localhost:3002'];
 let corsOptionsDelegate = (req, callback) => {
     let corsOptions;
     console.log(req.header('Origin'));
