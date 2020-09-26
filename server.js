@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const morgan = require('morgan')
+const morgan = require('morgan');
+const { dbInit } = require('./db')
 
 app.use(express.json());
 app.use(morgan('dev'));
@@ -29,6 +30,8 @@ app.use((error, req, res, next) => {
 })
 
 const port = 3001;
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+dbInit().then(() => {
+    app.listen(port, () => {
+        console.log(`Server running on port ${port}`);
+    })
 })
