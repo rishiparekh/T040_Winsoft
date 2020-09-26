@@ -8,8 +8,10 @@ app.use(morgan('dev'));
 app.use(cors())
 
 const decryptionRoutes = require('./routes/decrypt');
+const mapRoutes = require('./routes/map');
 
 app.use('/api/decryption', decryptionRoutes);
+app.use('/api/map', mapRoutes);
 
 app.use((req, res, next) => {
     const error = new Error("Not Found...");
