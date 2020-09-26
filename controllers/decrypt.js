@@ -1,3 +1,5 @@
+const { extract_enemy_camps } = require('../utils/decrypt');
+
 exports.decrypt = (req, res) => {
     try{
         const { encrypted_message, key, all_camp_names } = req.body
@@ -38,17 +40,4 @@ exports.decrypt = (req, res) => {
         console.log(error)
         res.status(500).send("Something went wrong")
     }    
-}
-
-const extract_enemy_camps = (decrypted_message, all_camp_names) => {
-    // insert logic here
-    let enemy_camp = []
-        all_camp_names.forEach((c)=>{
-        let name_camp = new RegExp(c);
-        var res = name_camp.exec(decrypted_message);
-        if (res){
-            enemy_camp.push(c);
-        }
-    });
-    return enemy_camp;
 }
