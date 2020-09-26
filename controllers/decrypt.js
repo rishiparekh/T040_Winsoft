@@ -29,12 +29,13 @@ exports.decrypt = (req, res) => {
 
         let decrypted_message = ''
 
-        for(let i=0; i < num_rows; i++){
+        outerLoop: for(let i=0; i < num_rows; i++){
             for (letter of key){
                 let character = matrix[i][indexes[letter]]
-                if(character !== '_'){
-                    decrypted_message += character
+                if(character === '_'){
+                    break outerLoop
                 }
+                decrypted_message += character
             }
         }
 
