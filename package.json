@@ -1,21 +1,30 @@
 {
-  "name": "T040_Winsoft",
+  "name": "t040_winsoft",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RishiDesai17/T040_Winsoft.git"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/RishiDesai17/T040_Winsoft/issues"
   },
-  "homepage": "https://github.com/RishiDesai17/T040_Winsoft#readme"
+  "homepage": "https://github.com/RishiDesai17/T040_Winsoft#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.7",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }
