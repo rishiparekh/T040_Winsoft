@@ -81,17 +81,16 @@ function Home() {
   const [encryptedMess, setencryptedMess] = useState(encrypted);
 
   const decrypt = async() => {
-    console.log('apio call');
-    let myHeaders = new Headers();
-
     const postData = JSON.stringify({
-      key:keyVal,
-      encrypted_message:encryptedMess,
-      all_camp_names:Object.keys(map)
+      key: keyVal,
+      encrypted_message: encryptedMess,
+      all_camp_names: Object.keys(map)
     })
     var requestOptions = {
       method: 'POST',
-      headers: myHeaders,
+      headers: {
+        'Content-type': 'application/json'
+      },
       body: postData
     };
     console.log('fetch',postData)

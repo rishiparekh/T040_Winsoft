@@ -5,25 +5,11 @@ const morgan = require('morgan')
 
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cors())
 
 const decryptionRoutes = require('./routes/decrypt');
 
 app.use('/api/decryption', decryptionRoutes);
-
-const whitelist = ['http://localhost:3002'];
-let corsOptionsDelegate = (req, callback) => {
-    let corsOptions;
-    console.log(req.header('Origin'));
-    if(whitelist.indexOf(req.header('Origin')) !== -1) {
-        corsOptions = { origin: true };
-    }
-    else {
-        corsOptions = { origin: false };
-    }
-    callback(null, corsOptions);
-}
-exports.cors = cors();
-exports.corsWithOptions = cors(corsOptionsDelegate);
 
 app.use((req, res, next) => {
     const error = new Error("Not Found...");
