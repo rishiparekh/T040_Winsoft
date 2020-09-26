@@ -3,35 +3,23 @@ exports.decrypt = (req, res) => {
         const { encrypted_message, key } = req.body
 
         const length_of_message = encrypted_message.length
-        const num_rows = Math.ceil(length_of_message / key.length)
+        const length_of_key = key.length
+        const number_of_rows = Math.ceil(length_of_message / length_of_key)
 
-        let matrix = []
-        for(let i=0; i<num_rows; i++) {
-            matrix[i] = []
-        }
-
-        let count = 0
-        while(count < length_of_message){
-            for(let i=0; i<num_rows; i++){
-                matrix[i].push(encrypted_message[count])
-                count += 1
-            }
-        }
-
-        let letters_of_key = key.split('')
-        const sorted_letters = letters_of_key.sort()
+        const sorted_letters_of_key = key.split('').sort()
 
         let indexes = {} // key-value pairs of lexicographic order of key's letters, for example { D: 0, E: 1, H: 2, I: 3, L: 4 }
 
-        for(let i=0; i < sorted_letters.length; i++){
-            indexes[sorted_letters[i]] = i
+        for(let i=0; i < sorted_letters_of_key.length; i++){
+            indexes[sorted_letters_of_key[i]] = i
         }
 
         let decrypted_message = ''
 
-        outerLoop: for(let i=0; i < num_rows; i++){
+        outerLoop: for(let i=0; i < number_of_rows; i++){
             for (letter of key){
-                let character = matrix[i][indexes[letter]]
+                let index = number_of_rows * indexes[letter] + i;
+                let character = encrypted_message[index]
                 if(character === '_'){
                     break outerLoop
                 }
@@ -44,6 +32,7 @@ exports.decrypt = (req, res) => {
         })
     }
     catch(error){
+        console.log(error)
         res.status(500).send("Something went wrong")
     }    
 }
