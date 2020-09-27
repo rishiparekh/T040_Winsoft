@@ -1,10 +1,16 @@
 import { Button, Container, Grid, makeStyles, TextField, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import MainNav from '../components/MainNav'
-import { map } from '../config'
+import { map, encrypted } from '../config'
 import Positions from './Positions'
+import Select from 'react-select';
 
-const encrypted = "Cnwvtus KuaiTaa rlodeeurethn  an Ia_mrhs baer oag ndC_a aeoat dLj lLdio_me  p  hagZLngan _"
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+]
 
 const useStyles = makeStyles(() => ({
   content:{
@@ -18,6 +24,12 @@ const useStyles = makeStyles(() => ({
   heading:{
     fontWeight: 700,
     marginBottom: 10
+  },
+  buttonRight:{
+    display:'flex',
+    justifyContent:'flex-end',
+    marginTop:20,
+    marginBottom:20
   }
 }))
 
@@ -29,7 +41,8 @@ function Home() {
   const [enemyLocations, setenemyLocations] = useState(null);
   const [desired_location, setdesired_location] = useState(null);
   const [gmarkers, setgmarkers] = useState(null);
-  const [mapData, setmapData] = useState(null)
+  const [mapData, setmapData] = useState(null);
+  const [selectedMap, setselectedMap] = useState(null)
   
 
   const decrypt = async() => {
@@ -118,9 +131,6 @@ function Home() {
       const data =await result.json();
       console.log(data);
       setmapData(data);
-      const canvas = document.getElementById("canvas");
-      const context = canvas.getContext("2d");
-      
       let mapped = data.map_details.map;
       fillCanvas(mapped);
     }
@@ -131,11 +141,16 @@ function Home() {
   const fillCanvas= (canvasmapdata) => {
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
-    // context.translate(canvas.width / 10, canvas.height / 4);
+    var tooltipCanvas = document.getElementById('tooltipCanvas');
+    var tooltipCtx = tooltipCanvas.getContext('2d');
     let mapped = canvasmapdata;
     const offset =25;
+    
     Object.keys(mapped).forEach(node => {
       context.beginPath();
+      context.font = "10px Arial";
+      context.fillText(node, (mapped[node].coordinates[0]*10)+offset,(mapped[node].coordinates[1]*10)+offset -20);
+      
       context.arc((mapped[node].coordinates[0]*10)+offset, (mapped[node].coordinates[1]*10)+offset, 10, 0, 2 * Math.PI);
       if(mapped[node].enemy) {
         context.fillStyle = "red";
@@ -153,6 +168,40 @@ function Home() {
       })
       context.stroke();
     })
+    
+//code for tooltip
+
+//     canvas.addEventListener("mousemove", function (e) {
+
+//     // getting the mouse position relative to the page - not the client
+//     var mouseX = parseInt(e.pageX - canvas.offsetLeft);
+//     var mouseY = parseInt(e.pageY - canvas.offsetTop);
+
+//     var hit = false;
+//     let tooltipMaps = Object.keys(mapped);
+//     for(var i=0;i<tooltipMaps.length;i++) {
+//         console.log('called',tooltipMaps[i]);
+//         let xcoord = (mapped[tooltipMaps[i]].coordinates[0]*10)+offset;
+//         let ycoord = (mapped[tooltipMaps[i]].coordinates[1]*10)+offset;
+//         var dx = mouseX - xcoord;
+//         var dy = mouseY - ycoord;
+//         if (dx * dx + dy * dy < 49) {
+//             // show tooltip to the right and below the cursor
+//             // and moving with it
+//             tooltipCanvas.style.left = (e.pageX + 10) + "px";
+//             tooltipCanvas.style.top = (e.pageY + 10) + "px";
+//             tooltipCtx.clearRect(0, 0, tooltipCanvas.width, tooltipCanvas.height);
+//             tooltipCtx.textAlign = "center";
+//             tooltipCtx.fillText(tooltipMaps[i], 20, 15);
+//             hit = true;
+//             // when a dot is found, don't keep on searching
+//             break;
+//         }
+//     }
+//     if (!hit) {
+//         tooltipCanvas.style.left = "-200px";
+//     }
+// });
   }
 
   return (
@@ -164,6 +213,14 @@ function Home() {
             Enter Details
           </Typography>
           <Grid container spacing={4}>
+            <Grid item md={12} xs={12} style={{zIndex:9999}}>
+              <Select
+                defaultValue={selectedMap}
+                onChange={setselectedMap}
+                options={options}
+                placeholder="Select Map"
+              />
+            </Grid>
             <Grid item md={12} xs={12}>
               <TextField 
               id="outlined-basic" 
@@ -206,7 +263,7 @@ function Home() {
               {
                 enemyLocations?enemyLocations.length?<>
                 <strong>Enemy locations found at :</strong> {enemyLocations.join()}
-                <div>
+                <div className={classes.buttonRight}>
                   <Button
                     color="primary"
                     variant="outlined"
@@ -229,6 +286,7 @@ function Home() {
             <Grid item xs={12} md={12} classname={classes.graph}>
               <div style={{transform: 'scaleY(-1)',textAlign:'center',overflowX:'auto'}}>
                 <canvas id="canvas" width="600" height="300" ></canvas>
+                <canvas id="tooltipCanvas" height="100" width="300"></canvas>
               </div>
             </Grid>
             <Grid item xs={12} md={12} className={classes.gmap}>
