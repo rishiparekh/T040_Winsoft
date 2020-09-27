@@ -8,7 +8,6 @@ import './App.css';
 import Home from './views/Home';
 import Login from './views/Login';
 import Maps from './views/Maps';
-import Sandbox from './views/sandbox';
 import useStore from './zustand/store';
 import ProtectedRoute from './protected-route/protected-route';
 
@@ -27,7 +26,6 @@ function App() {
             <Route exact path="/login" component={Login} />
             <ProtectedRoute exact path="/" component={Home}/>
             <ProtectedRoute exact path="/maps" component={Maps}/>
-            <ProtectedRoute exact path="/sandbox" component={Sandbox}/>
             <Route path="*" component={() => 'error 404'}/>
           </Switch>
         }
