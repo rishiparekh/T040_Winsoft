@@ -7,14 +7,14 @@ exports.login = async(req,res) => {
         const { username, password } = req.body
         const user = await User.find({ username: username }).limit(1);
         if(user.length === 0){
-            return res.status(404).send('This account does not exist')
+            return res.status(404).json({NOT_FOUND: 'This account does not exist'})
         }
         
         const userData = user[0]
         console.log(userData, user[0])
         const isValid = await bcrypt.compare(password, userData.password)
         if(!isValid){
-            return res.status(401).send( 'Invalid credentials')
+            return res.status(401).json( {UNAUTHORIZED: 'Invalid credentials'})
         }
         const access_token = await jwt.sign({ _id: userData._id }, 'secretKey', {
             expiresIn: '1y'
@@ -26,6 +26,6 @@ exports.login = async(req,res) => {
     }
     catch(err){
         console.log(err)
-        res.status(500).send('Something went wrong, Please try again')
+        res.status(500).send({SOMETHING_WENT_WRONG: 'Something went wrong, Please try again'})
     }
 }
