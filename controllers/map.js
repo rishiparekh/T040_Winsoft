@@ -32,41 +32,12 @@ exports.get_desired_location = (req, res) => {
     }
 }
 
-exports.get_all_maps_brief_details = async(req, res) => {
+exports.get_map = async(req, res) => {
     try{
-        const map_brief_details = await Map.find({}, '_id title')
-        return res.status(200).json({
-            map_brief_details
-        })
-    }
-    catch(error){
-        console.log(error)
-        res.status(500).send("Something went wrong")
-    }
-}
-
-exports.get_one_map = async(req, res) => {
-    try{
-        const map_details = await Map.findById(req.params.id)
+        const map_details = await Map.findOne().sort({created_at: 1})
+        console.log(map_details)
         res.status(200).json({
             map_details
-        })
-    }
-    catch(error){
-        console.log(error)
-        res.status(500).send("Something went wrong")
-    }
-}
-
-exports.add_map = async(req, res) => {
-    try{
-        const { title, map } = req.body
-        const new_map = await new Map({
-            title, 
-            map
-        }).save()
-        res.status(200).json({
-            map_details: new_map
         })
     }
     catch(error){

@@ -4,8 +4,6 @@ const MapController = require('../controllers/map');
 
 router.post('/get-desired-location', MapController.get_desired_location)
 
-router.get('/', MapController.get_all_maps_brief_details)
-
-router.get('/:id', MapController.get_one_map)
+router.get('/', MapController.get_map)
 
 module.exports = router
