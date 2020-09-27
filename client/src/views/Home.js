@@ -3,14 +3,7 @@ import React, { useEffect, useState } from 'react'
 import MainNav from '../components/MainNav'
 import { encrypted } from '../config'
 import Positions from './Positions'
-import Select from 'react-select';
 
-
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-]
 
 const useStyles = makeStyles(() => ({
   content:{
@@ -42,7 +35,6 @@ function Home() {
   const [desired_location, setdesired_location] = useState(null);
   const [gmarkers, setgmarkers] = useState(null);
   const [mapData, setmapData] = useState(null);
-  const [selectedMap, setselectedMap] = useState(null)
   
 
   const decrypt = async() => {
@@ -60,7 +52,6 @@ function Home() {
     };
     const data = await fetch("/api/decryption/",requestOptions)
     const result = await data.json();
-    console.log(result);
     setdecrypted(result && result.decrypted_message);
     setenemyLocations(result && result.enemy_camps)
   }
@@ -87,7 +78,6 @@ function Home() {
     };
     const data = await fetch("/api/map/get-desired-location",requestOptions)
     const result = await data.json();
-    console.log(result);
     if(result && result.desired_location) {
       setdesired_location(result.desired_location);
       let markers = [{
@@ -102,26 +92,23 @@ function Home() {
           enemy:true,
         })
       })
-      console.log(markers);
       setgmarkers(markers);
       
       mapped[result.desired_location].desirable = true;
       fillCanvas(mapped);
-      console.log('canvas in',mapped);
     }
     
   }
 
   useEffect(() => {
     const collect = async() => {
-      const result = await fetch("/api/map/5f6fbb503de7822a2c26836a",{
+      const result = await fetch("/api/map/",{
         method:"GET",
         headers: {
           'Content-type': 'application/json'
         }
       })
       const data =await result.json();
-      console.log(data);
       setmapData(data.map_details.map);
       let mapped = data.map_details.map;
       fillCanvas(mapped);
@@ -179,14 +166,6 @@ function Home() {
             Enter Details
           </Typography>
           <Grid container spacing={4}>
-            <Grid item md={12} xs={12} style={{zIndex:9999}}>
-              <Select
-                defaultValue={selectedMap}
-                onChange={setselectedMap}
-                options={options}
-                placeholder="Select Map"
-              />
-            </Grid>
             <Grid item md={12} xs={12}>
               <TextField 
               id="outlined-basic" 
