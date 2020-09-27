@@ -10,9 +10,11 @@ app.use(cors())
 
 const decryptionRoutes = require('./routes/decrypt');
 const mapRoutes = require('./routes/map');
+const userRoutes = require('./routes/user');
 
 app.use('/api/decryption', decryptionRoutes);
 app.use('/api/map', mapRoutes);
+app.use('/api/user', userRoutes);
 
 app.use((req, res, next) => {
     const error = new Error("Not Found...");
