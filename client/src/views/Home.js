@@ -1,7 +1,7 @@
 import { Button, Container, Grid, makeStyles, TextField, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import MainNav from '../components/MainNav'
-import { map, encrypted } from '../config'
+import { encrypted } from '../config'
 import Positions from './Positions'
 import Select from 'react-select';
 
@@ -49,7 +49,7 @@ function Home() {
     const postData = JSON.stringify({
       key: keyVal,
       encrypted_message: encryptedMess,
-      all_camp_names: Object.keys(map)
+      all_camp_names: Object.keys(mapData)
     })
     var requestOptions = {
       method: 'POST',
@@ -66,17 +66,17 @@ function Home() {
   }
 
   const getLocation = async() => {
-    console.log('iniMap',map);
-    // let filterdMap = Object.assign({}, map);
-    // enemyLocations.forEach(loc => {
-    //   delete filterdMap[loc];
-    // })
-    // Object.keys(filterdMap).forEach(loc => {
-    //   delete filterdMap[loc].coordinates;
-    // })
+    let mapped = mapData;
+    Object.keys(mapped).forEach(node => {
+      if(enemyLocations.includes(node)) {
+        mapped[node].enemy=true;
+      } else {
+        mapped[node].enemy=false;
+      }
+    })
     const postData = JSON.stringify({
       enemies:enemyLocations,
-      map
+      map:mapped
     })
     var requestOptions = {
       method: 'POST',
@@ -92,27 +92,19 @@ function Home() {
       setdesired_location(result.desired_location);
       let markers = [{
         name:result.desired_location,
-        coordinates:map[result.desired_location]["coordinates"],
+        coordinates:mapData[result.desired_location]["coordinates"],
         enemy:false
       }]
       enemyLocations.forEach(loc => {
         markers.push({
           name:loc,
-          coordinates:map[loc].coordinates,
+          coordinates:mapData[loc].coordinates,
           enemy:true,
         })
       })
       console.log(markers);
       setgmarkers(markers);
-      //map data from endpoint
-      let mapped = mapData.map_details.map;
-      Object.keys(mapped).forEach(node => {
-        if(enemyLocations.includes(node)) {
-          mapped[node].enemy=true;
-        } else {
-          mapped[node].enemy=false;
-        }
-      })
+      
       mapped[result.desired_location].desirable = true;
       fillCanvas(mapped);
       console.log('canvas in',mapped);
@@ -130,7 +122,7 @@ function Home() {
       })
       const data =await result.json();
       console.log(data);
-      setmapData(data);
+      setmapData(data.map_details.map);
       let mapped = data.map_details.map;
       fillCanvas(mapped);
     }
