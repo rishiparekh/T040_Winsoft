@@ -29,7 +29,7 @@ const useStyles = makeStyles(() => ({
 function Home() {
   const classes = useStyles();
   const [keyVal, setKeyVal] = useState('');
-  const [encryptedMess, setencryptedMess] = useState(encrypted);
+  const [encryptedMess, setencryptedMess] = useState('');
   const [decrypted, setdecrypted] = useState(null);
   const [enemyLocations, setenemyLocations] = useState(null);
   const [desired_location, setdesired_location] = useState(null);
