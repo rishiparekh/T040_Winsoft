@@ -1,46 +1,57 @@
 {
     "Khardung La": {
         "coordinates": [0, 10],
-        "neighbours": ["Lachulung La", "Gyong La"]
+        "neighbours": ["Lachulung La", "Gyong La"],
+        "real_life_coordinates":[34.2787,77.6047]
     },
     "Lachulung La": {
         "coordinates": [10, 20],
-        "neighbours": ["Lachulung La", "Sia La"]
+        "neighbours": ["Lachulung La", "Sia La"],
+        "real_life_coordinates":[33.1044,77.6297]
     },
     "Sasser Pass": {
         "coordinates": [10, 10],
-        "neighbours": ["Khardung La", "Sia La", "Zoji La"]
+        "neighbours": ["Khardung La", "Sia La", "Zoji La"],
+        "real_life_coordinates":[35.0417, 77.7367]
     },
     "Gyong La": {
         "coordinates": [10, 0],
-        "neighbours": ["Khardung La", "Zoji La", "Indira Col"]
+        "neighbours": ["Khardung La", "Zoji La", "Indira Col"],
+        "real_life_coordinates":[35.1841, 77.0237]
     },
     "Sia La": {
         "coordinates": [20, 20],
-        "neighbours": ["Sasser Pass", "Rezang La"]
+        "neighbours": ["Sasser Pass", "Rezang La"],
+        "real_life_coordinates":[35.5819, 76.7925]
     },
     "Zoji La": {
         "coordinates": [20, 10],
-        "neighbours": ["Sasser Pass", "Gyong La"]
+        "neighbours": ["Sasser Pass", "Gyong La"],
+        "real_life_coordinates":[34.2792, 75.4708]
     },
     "Indira Col": {
         "coordinates": [20, 0],
-        "neighbours": ["Gyong La", "Rezang La"]
+        "neighbours": ["Gyong La", "Rezang La"],
+        "real_life_coordinates":[35.6644, 76.7978]
     },
     "Rezang La": {
         "coordinates": [30, 10],
-        "neighbours": ["Sia La", "Indira Col", "Tanglang La", "Pensi La"]
+        "neighbours": ["Sia La", "Indira Col", "Tanglang La", "Pensi La"],
+        "real_life_coordinates":[33.5186, 78.7315]
     },
     "Tanglang La": {
         "coordinates": [40, 20],
-        "neighbours": ["Tanglang La", "Marsimik La"]
+        "neighbours": ["Tanglang La", "Marsimik La"],
+        "real_life_coordinates":[33.5078, 77.7699]
     },
     "Pensi La": {
         "coordinates": [40, 0],
-        "neighbours": ["Rezang La", "Marsimik La"]
+        "neighbours": ["Rezang La", "Marsimik La"],
+        "real_life_coordinates":[33.8681, 76.3554]
     },
     "Marsimik La": {
         "coordinates": [50, 10],
-        "neighbours": ["Tanglang La", "Pensi La"]
+        "neighbours": ["Tanglang La", "Pensi La"],
+        "real_life_coordinates":[34.0933, 78.6178]
     }
 }
