@@ -30,19 +30,21 @@ function Maps() {
   const classes = useStyles();
   React.useEffect(() => {
     const collect = async() => {
-      // const result = await fetch("/api/maps",{
-      //   method:'GET',
-      //   headers: {
-      //     'Content-type': 'application/json'
-      //   }
-      // });
-      // const data = await result.json();
-      let data=[
-        {decrypted_message:'dfdf issiffifie',desired_location:'Gong skd',date:new Date().toLocaleDateString()},
-        {decrypted_message:'fgfhghghghgdfdf issiffifie',desired_location:'Gongdgfgfg skd',date:new Date().toLocaleDateString()}
+      const result = await fetch("/api/decryption/history",{
+        method:'GET',
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+      const data = await result.json();
       
-      ]
-      setmaps(data);
+      console.log(data);
+      // let data=[
+      //   {decrypted_message:'dfdf issiffifie',desired_location:'Gong skd',date:new Date().toLocaleDateString()},
+      //   {decrypted_message:'fgfhghghghgdfdf issiffifie',desired_location:'Gongdgfgfg skd',date:new Date().toLocaleDateString()}
+      
+      // ]
+      setmaps(data.history);
     }
     collect();
   },[])
@@ -66,21 +68,16 @@ function Maps() {
                     Desired Location
                   </strong>
                 </TableCell>
-                <TableCell align="right">
-                  <strong>
-                    Date
-                  </strong>
-                </TableCell>
+                
               </TableRow>
             </TableHead>
             <TableBody>
               {maps.map((row,index) => (
                 <TableRow key={index}>
                   <TableCell component="th" scope="row">
-                    {row.decrypted_message}
+                    {row.decrypted}
                   </TableCell>
                   <TableCell align="right">{row.desired_location}</TableCell>
-                  <TableCell align="right">{row.date}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

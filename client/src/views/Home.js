@@ -79,6 +79,19 @@ function Home() {
     const data = await fetch("/api/map/get-desired-location",requestOptions)
     const result = await data.json();
     if(result && result.desired_location) {
+      let postData = JSON.stringify({
+        decrypted,
+        desired_location:result.desired_location
+      })
+      let requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: postData
+      };
+      let data_h = await fetch("/api/decryption/history",requestOptions)
+      let result_h = await data_h.json();
       setdesired_location(result.desired_location);
       let markers = [{
         name:result.desired_location,
