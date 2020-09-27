@@ -10,7 +10,7 @@ function MainNav(props) {
 //   },[window.location.pathname]);
   return (
     <React.Fragment>
-      <Navbar sticky="top" variant="dark" bg="dark" expand="lg" >
+      <Navbar style={{zIndex:10000}} sticky="top" variant="dark" bg="dark" expand="lg" >
         <Navbar.Brand href="/" >Indian Army</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav" >
