@@ -1,13 +1,13 @@
-import React,{useState} from 'react'
+import React, { useState, useCallback } from 'react'
 import {Navbar,Nav,Button} from 'react-bootstrap'
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import { IconButton } from '@material-ui/core';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import useStore from '../zustand/store';
 
 function MainNav(props) {
-//   const [path, setPath] = useState();
-//   React.useEffect(() => {
-//     setPath(window.location.pathname);
-//   },[window.location.pathname]);
+  const { loggedIn, logout } = useStore(useCallback(state => ({loggedIn: state.loggedIn, logout: state.logout}), []))
+  
   return (
     <React.Fragment>
       <Navbar style={{zIndex:10000}} sticky="top" variant="dark" bg="dark" expand="lg" >
@@ -20,21 +20,18 @@ function MainNav(props) {
               </Nav.Link>
               
             </Nav>
-            {/* <Nav className="ml-auto" style={{display:'contents'}}>
-              
+            <Nav className="ml-auto" style={{display:'contents'}}>
               {
-                localStorage.getItem('Status') == 'LoggedIn'?
-                <IconButton 
-                  href={(localStorage.getItem('Designation')==='Teacher')?
-                  "/teacher":"/student"}
-                >
-                  <AccountCircleOutlinedIcon style={{color:'white'}}/>
-                </IconButton>:
+                loggedIn ?
+                <IconButton onClick={logout}>
+                  <ExitToAppIcon style={{color:'white'}} />
+                </IconButton>
+                :
                 <Nav.Link href="/login" className="BottomButton" >
                   <Button  variant="primary">Log in</Button>{' '}
                 </Nav.Link>
               }
-            </Nav> */}
+            </Nav>
         </Navbar.Collapse>
       </Navbar>
     </React.Fragment>
