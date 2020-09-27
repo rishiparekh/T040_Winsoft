@@ -1,4 +1,5 @@
 const { extract_enemy_camps } = require('../utils/decrypt');
+const Decrypt = require('../models/decrypt')
 
 exports.decrypt = (req, res) => {
     try{
@@ -40,4 +41,35 @@ exports.decrypt = (req, res) => {
         console.log(error)
         res.status(500).send("Something went wrong")
     }    
+}
+
+exports.get_history = async(req, res) => {
+    try{
+        const history = await Decrypt.find()
+        res.status(200).json({
+            history
+        })
+    }
+    catch(error){
+        console.log(error)
+        res.status(500).send("Something went wrong")
+    }
+}
+
+exports.add = async(req, res) => {
+    try{
+        const { decrypted, desired_location } = req.body
+        await new Decrypt({
+            decrypted, 
+            desired_location
+        }).save()
+        res.status(200).json({
+            decrypted, 
+            desired_location
+        })
+    }
+    catch(error){
+        console.log(error)
+        res.status(500).send("Something went wrong")
+    }
 }
