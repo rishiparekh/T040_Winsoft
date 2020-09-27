@@ -141,11 +141,17 @@ function Home() {
   const fillCanvas= (canvasmapdata) => {
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
-    var tooltipCanvas = document.getElementById('tooltipCanvas');
-    var tooltipCtx = tooltipCanvas.getContext('2d');
     let mapped = canvasmapdata;
     const offset =25;
-    
+    // Create a custom fillText funciton that flips the canvas, draws the text, and then flips it back
+    context.fillText = function(text, x, y) {
+      this.save();       // Save the current canvas state
+      this.scale(1, -1); // Flip to draw the text
+      this.fillStyle="black";
+      this.fillText.dummyCtx.fillText.call(this, text+ `(${(x-offset)/10},${(y-offset+20)/10})`, x, -y); // Draw the text, invert y to get coordinate right
+      this.restore();    // Restore the initial canvas state
+    }
+    context.fillText.dummyCtx = document.createElement('canvas').getContext('2d');
     Object.keys(mapped).forEach(node => {
       context.beginPath();
       context.font = "10px Arial";
@@ -169,39 +175,7 @@ function Home() {
       context.stroke();
     })
     
-//code for tooltip
 
-//     canvas.addEventListener("mousemove", function (e) {
-
-//     // getting the mouse position relative to the page - not the client
-//     var mouseX = parseInt(e.pageX - canvas.offsetLeft);
-//     var mouseY = parseInt(e.pageY - canvas.offsetTop);
-
-//     var hit = false;
-//     let tooltipMaps = Object.keys(mapped);
-//     for(var i=0;i<tooltipMaps.length;i++) {
-//         console.log('called',tooltipMaps[i]);
-//         let xcoord = (mapped[tooltipMaps[i]].coordinates[0]*10)+offset;
-//         let ycoord = (mapped[tooltipMaps[i]].coordinates[1]*10)+offset;
-//         var dx = mouseX - xcoord;
-//         var dy = mouseY - ycoord;
-//         if (dx * dx + dy * dy < 49) {
-//             // show tooltip to the right and below the cursor
-//             // and moving with it
-//             tooltipCanvas.style.left = (e.pageX + 10) + "px";
-//             tooltipCanvas.style.top = (e.pageY + 10) + "px";
-//             tooltipCtx.clearRect(0, 0, tooltipCanvas.width, tooltipCanvas.height);
-//             tooltipCtx.textAlign = "center";
-//             tooltipCtx.fillText(tooltipMaps[i], 20, 15);
-//             hit = true;
-//             // when a dot is found, don't keep on searching
-//             break;
-//         }
-//     }
-//     if (!hit) {
-//         tooltipCanvas.style.left = "-200px";
-//     }
-// });
   }
 
   return (
@@ -286,7 +260,6 @@ function Home() {
             <Grid item xs={12} md={12} classname={classes.graph}>
               <div style={{transform: 'scaleY(-1)',textAlign:'center',overflowX:'auto'}}>
                 <canvas id="canvas" width="600" height="300" ></canvas>
-                <canvas id="tooltipCanvas" height="100" width="300"></canvas>
               </div>
             </Grid>
             <Grid item xs={12} md={12} className={classes.gmap}>
