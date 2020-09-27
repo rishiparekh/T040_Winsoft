@@ -99,13 +99,13 @@ function Home() {
       setdesired_location(result.desired_location);
       let markers = [{
         name:result.desired_location,
-        coordinates:mapData[result.desired_location]["coordinates"],
+        coordinates:mapData[result.desired_location]["real_life_coordinates"],
         enemy:false
       }]
       enemyLocations.forEach(loc => {
         markers.push({
           name:loc,
-          coordinates:mapData[loc].coordinates,
+          coordinates:mapData[loc].real_life_coordinates,
           enemy:true,
         })
       })
@@ -126,6 +126,7 @@ function Home() {
         }
       })
       const data =await result.json();
+      console.log(data);
       setmapData(data.map_details.map);
       let mapped = data.map_details.map;
       fillCanvas(mapped);
