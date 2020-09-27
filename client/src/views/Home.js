@@ -38,6 +38,10 @@ function Home() {
   
 
   const decrypt = async() => {
+    if(encryptedMess === "" || keyVal === ""){
+      alert("Enter both fields")
+      return
+    }
     const postData = JSON.stringify({
       key: keyVal,
       encrypted_message: encryptedMess,
