@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 const { dbInit } = require('./db')
+const path = require('path')
 
 app.use(express.json());
 app.use(morgan('dev'));
@@ -30,8 +31,14 @@ app.use((error, req, res, next) => {
         }
     })
 })
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build'))
+    app.get('*',(req,res) =>{
+        res.sendFile(path.resolve(__dirname,'client','build','index.html'));
+    })
+}
 
-const port = 3001;
+const port =process.env.PORT || 3001;
 dbInit().then(() => {
     app.listen(port, () => {
         console.log(`Server running on port ${port}`);

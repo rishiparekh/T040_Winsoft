@@ -3,10 +3,11 @@ const bcrypt = require('bcryptjs');
 const Map = require('./models/map');
 const User = require('./models/user');
 const map = require('./sample_map.json');
+const MONGO_URI = require('./config/db_config')
 
 exports.dbInit = async() => {
     try{
-        await mongoose.connect("mongodb://localhost:27017/t040_winsoft", {
+        await mongoose.connect(process.env.MONGODB_URI || MONGO_URI, {
             useUnifiedTopology: true,
             useNewUrlParser: true
         });
